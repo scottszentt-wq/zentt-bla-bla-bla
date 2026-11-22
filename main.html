@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RFID and Fingerprint Attendance Monitoring System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<main id="home" class="home-page">
+
+    <section class="home-left">
+        <div class="background-overlay"></div>
+        <div class="school-details">
+            <img src="images/school-logo.png" class="large-school-logo"
+                 alt="School Logo" onerror="this.style.display='none'">
+
+            <h1>LUIS Y. FERRER JR. SENIOR HIGH SCHOOL</h1>
+
+            <h2>"Smart Tracking, Secure Attendance, Building Brighter Futures."</h2>
+
+            <p>
+                A digital attendance monitoring system designed to provide
+                convenient, reliable, and secure student attendance tracking
+                through RFID and fingerprint authentication.
+            </p>
+        </div>
+    </section>
+
+    <section class="home-right">
+        <div class="login-heading">
+            <img src="images/school-logo.png" class="login-logo"
+                 alt="School Logo" onerror="this.style.display='none'">
+            <h1>RFID AND FINGERPRINT ATTENDANCE MONITORING SYSTEM</h1>
+        </div>
+
+        <p class="muted centered">
+            Please enter your account details to access the system.
+        </p>
+
+        <form id="login-form">
+            <label for="login-id">Student ID / Admin ID</label>
+            <input id="login-id" type="text"
+                   placeholder="Enter your ID" required>
+
+            <label for="login-password">Password</label>
+            <input id="login-password" type="password"
+                   placeholder="Enter your password" required>
+
+            <button type="submit" class="primary-button full-width">
+                LOGIN
+            </button>
+
+            <p id="login-message" class="form-message"></p>
+        </form>
+
+        <div class="note">Accounts are provided by the administrators</div>
+    </section>
+</main>
+
+<!-- MAIN APPLICATION -->
+<main id="app" class="app hidden">
+
+    <header class="topbar">
+        <div>
+            <strong>RFID & Fingerprint Attendance</strong>
+            <span id="signed-in-label">Dashboard</span>
+        </div>
+        <button id="logout-button" class="secondary-button">
+            LOG OUT
+        </button>
+    </header>
+
+    <!-- ADMIN DASHBOARD -->
+    <section id="admin-home" class="page-shell hidden">
+
+        <div class="page-heading">
+            <div>
+                <p class="eyebrow">ADMINISTRATOR</p>
+                <h1>Admin Dashboard</h1>
+                <p class="muted">
+                    Manage students, devices, attendance, and reports.
+                </p>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <article class="stat-card">
+                <span>Registered Students</span>
+                <strong id="stat-students">0</strong>
+            </article>
+            <article class="stat-card">
+                <span>Present Today</span>
+                <strong id="stat-present">0</strong>
+            </article>
+            <article class="stat-card">
+                <span>RFID Registered</span>
+                <strong id="stat-rfid">0</strong>
+            </article>
+            <article class="stat-card">
+                <span>Fingerprint Enrolled</span>
+                <strong id="stat-fingerprint">0</strong>
+            </article>
+        </div>
+
+        <div class="menu-grid">
+
+            <button class="menu-card" data-admin-page="students">
+                <span class="menu-icon">👨‍🎓</span>
+                <b>Student Management</b>
+                <small>Add, view, edit, and deactivate student accounts.</small>
+                <em>Open Section →</em>
+            </button>
+
+            <button class="menu-card" data-admin-page="devices">
+                <span class="menu-icon">🔐</span>
+                <b>Device Registration</b>
+                <small>Register RFID cards and fingerprints.</small>
+                <em>Open Section →</em>
+            </button>
+
+            <button class="menu-card" data-admin-page="attendance">
+                <span class="menu-icon">📋</span>
+                <b>Attendance Records</b>
+                <small>Review student attendance records.</small>
+                <em>Open Section →</em>
+            </button>
+
+            <button class="menu-card" data-admin-page="reports">
+                <span class="menu-icon">📊</span>
+                <b>Reports</b>
+                <small>View attendance summaries.</small>
+                <em>Open Section →</em>
+            </button>
+
+            <button class="menu-card" data-admin-page="sms">
+                <span class="menu-icon">📩</span>
+                <b>SMS Management</b>
+                <small>Manage registered guardian numbers.</small>
+                <em>Open Section →</em>
+            </button>
+
+            <button class="menu-card" data-admin-page="accounts">
+                <span class="menu-icon">⚙️</span>
+                <b>Account Management</b>
+                <small>View administrator accounts.</small>
+                <em>Open Section →</em>
+            </button>
+
+        </div>
+    </section>
+
+    <!-- ADMIN SUBPAGES -->
+    <section id="admin-subpage" class="page-shell hidden">
+
+        <button id="admin-back" class="back-button">
+            ← Back to Admin Dashboard
+        </button>
+
+        <!-- STUDENT MANAGEMENT -->
+        <section id="page-students" class="content-page hidden">
+            <h1>Student Management</h1>
+            <p class="muted">Register and manage student information.</p>
+
+            <div class="panel">
+                <h2 id="student-form-title">Add a Student</h2>
+
+                <form id="student-form" class="form-grid">
+
+                    <label>Student ID
+                        <input id="student-id" required
+                               placeholder="Enter Student ID">
+                    </label>
+
+                    <label>Full Name
+                        <input id="student-name" required
+                               placeholder="Enter Full Name">
+                    </label>
+
+                    <label>Grade Level
+                        <select id="student-grade" required>
+                            <option value="">Choose Grade</option>
+                            <option>Grade 11</option>
+                            <option>Grade 12</option>
+                        </select>
+                    </label>
+
+                    <label>Strand
+                        <input id="student-strand" required
+                               placeholder="Enter Strand">
+                    </label>
+
+                    <label>Temporary Password
+                        <input id="student-password" type="password"
+                               required placeholder="Create Password">
+                    </label>
+
+                    <label>Parent / Guardian Number
+                        <input id="student-guardian" type="tel"
+                               placeholder="Registered Mobile Number">
+                    </label>
+
+                    <div class="form-actions">
+                        <button class="primary-button" type="submit"
+                                id="student-save-button">
+                            Add Student
+                        </button>
+                        <button class="secondary-button hidden"
+                                type="button" id="student-cancel-edit">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h2>Student List</h2>
+                    <input id="student-search" class="search-input"
+                           placeholder="Search student">
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Name</th>
+                                <th>Grade</th>
+                                <th>Strand</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="students-table"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- DEVICE REGISTRATION -->
+        <section id="page-devices" class="content-page hidden">
+            <h1>RFID & Fingerprint Registration</h1>
+            <p class="muted">
+                Register the devices associated with each student.
+            </p>
+
+            <div class="panel">
+                <h2>Select Student</h2>
+                <label>Student Account
+                    <select id="device-student">
+                        <option value="">Select Student</option>
+                    </select>
+                </label>
+                <div id="device-student-summary" class="device-summary">
+                    Select a student to view registration status.
+                </div>
+            </div>
+
+            <div class="two-column">
+
+                <div class="panel">
+                    <h2>RFID Registration</h2>
+                    <p class="muted">
+                        Enter the RFID card UID provided during hardware testing.
+                    </p>
+
+                    <form id="rfid-form">
+                        <label>RFID Card UID
+                            <input id="rfid-uid"
+                                   placeholder="Enter RFID UID" required>
+                        </label>
+                        <button class="primary-button" type="submit">
+                            Save RFID Reference
+                        </button>
+                    </form>
+                    <p class="notice">
+                        This saves a manually entered test UID.
+                        It does not scan an actual card.
+                    </p>
+                </div>
+
+                <div class="panel">
+                    <h2>Fingerprint Enrollment</h2>
+
+                    <div class="fingerprint-placeholder">
+                        <span>◎</span>
+                        <b id="fingerprint-status">Not Enrolled</b>
+                        <small id="fingerprint-detail">
+                            R307 sensor is not connected.
+                        </small>
+                    </div>
+
+                    <label>Fingerprint Template ID
+                        <input id="fingerprint-template"
+                               placeholder="Assigned after hardware enrollment">
+                    </label>
+
+                    <button id="fingerprint-start"
+                            class="primary-button full-width" type="button">
+                        Prepare Enrollment
+                    </button>
+
+                    <button id="fingerprint-clear"
+                            class="secondary-button full-width" type="button">
+                        Clear Enrollment Status
+                    </button>
+
+                    <p class="notice">
+                        This is a demonstration only. No fingerprint
+                        is actually captured or stored.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ATTENDANCE -->
+        <section id="page-attendance" class="content-page hidden">
+            <h1>Attendance Records</h1>
+            <p class="muted">
+                Review and manage attendance entries.
+            </p>
+
+            <div class="panel">
+                <h2>Add Demo Attendance Entry</h2>
+
+                <form id="attendance-form" class="form-grid">
+                    <label>Student
+                        <select id="attendance-student" required>
+                            <option value="">Select Student</option>
+                        </select>
+                    </label>
+
+                    <label>Date
+                        <input id="attendance-date" type="date" required>
+                    </label>
+
+                    <label>Time
+                        <input id="attendance-time" type="time" required>
+                    </label>
+
+                    <label>Status
+                        <select id="attendance-status">
+                            <option>Present</option>
+                            <option>Late</option>
+                            <option>Absent</option>
+                        </select>
+                    </label>
+
+                    <div class="form-actions">
+                        <button class="primary-button" type="submit">
+                            Add Demo Record
+                        </button>
+                    </div>
+                </form>
+
+                <p class="notice">
+                    Manual records are for testing only. Real attendance
+                    will come from the ESP32 through the backend.
+                </p>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h2>All Attendance Records</h2>
+                    <input id="attendance-search" class="search-input"
+                           placeholder="Search student">
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendance-table"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- REPORTS -->
+        <section id="page-reports" class="content-page hidden">
+            <h1>Attendance Reports</h1>
+            <p class="muted">Attendance summary.</p>
+
+            <div class="stats-grid">
+                <article class="stat-card">
+                    <span>Present</span>
+                    <strong id="report-present">0</strong>
+                </article>
+                <article class="stat-card">
+                    <span>Late</span>
+                    <strong id="report-late">0</strong>
+                </article>
+                <article class="stat-card">
+                    <span>Absent</span>
+                    <strong id="report-absent">0</strong>
+                </article>
+                <article class="stat-card">
+                    <span>Total Records</span>
+                    <strong id="report-total">0</strong>
+                </article>
+            </div>
+
+            <div class="panel">
+                <h2>Report Information</h2>
+                <p class="muted">
+                    Downloadable reports and date filters can be added
+                    when the backend and database are ready.
+                </p>
+            </div>
+        </section>
+
+        <!-- SMS MANAGEMENT -->
+        <section id="page-sms" class="content-page hidden">
+            <h1>SMS Management</h1>
+            <p class="muted">
+                Manage registered parent or guardian contact numbers.
+            </p>
+
+            <div class="panel">
+                <h2>Update Guardian Contact</h2>
+
+                <form id="guardian-form">
+                    <label>Student
+                        <select id="guardian-student" required>
+                            <option value="">Select Student</option>
+                        </select>
+                    </label>
+
+                    <label>Guardian Mobile Number
+                        <input id="guardian-number" type="tel" required
+                               placeholder="Enter registered number">
+                    </label>
+
+                    <button class="primary-button" type="submit">
+                        Save Contact Number
+                    </button>
+                </form>
+            </div>
+
+            <div class="panel">
+                <h2>Notification Status</h2>
+                <div id="sms-log" class="empty-state">
+                    SMS sending is not connected yet.
+                </div>
+                <p class="notice">
+                    Actual SMS delivery requires an SMS provider and backend.
+                </p>
+            </div>
+        </section>
+
+        <!-- ACCOUNT MANAGEMENT -->
+        <section id="page-accounts" class="content-page hidden">
+            <h1>Account Management</h1>
+
+            <div class="panel">
+                <h2>Administrator Accounts</h2>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Admin ID</th>
+                                <th>Role</th>
+                                <th>Account Type</th>
+                            </tr>
+                        </thead>
+                        <tbody id="accounts-table"></tbody>
+                    </table>
+                </div>
+
+                <p class="notice">
+                    Real administrator accounts must be managed securely
+                    through the backend.
+                </p>
+            </div>
+        </section>
+
+    </section>
+
+    <!-- STUDENT DASHBOARD -->
+    <section id="student-home" class="page-shell hidden">
+        <div class="page-heading">
+            <div>
+                <p class="eyebrow">STUDENT PORTAL</p>
+                <h1 id="student-welcome">Student Dashboard</h1>
+                <p class="muted">
+                    View your personal attendance and account information.
+                </p>
+            </div>
+        </div>
+
+        <div class="stats-grid student-stats">
+            <article class="stat-card">
+                <span>Present</span>
+                <strong id="my-present">0</strong>
+            </article>
+            <article class="stat-card">
+                <span>Late</span>
+                <strong id="my-late">0</strong>
+            </article>
+            <article class="stat-card">
+                <span>Absent</span>
+                <strong id="my-absent">0</strong>
+            </article>
+        </div>
+
+        <div class="menu-grid student-menu">
+
+            <button class="menu-card" data-student-page="my-attendance">
+                <span class="menu-icon">📅</span>
+                <b>My Attendance</b>
+                <small>View your attendance history.</small>
+                <em>Open Section →</em>
+            </button>
+
+            <button class="menu-card" data-student-page="my-profile">
+                <span class="menu-icon">👤</span>
+                <b>My Profile</b>
+                <small>View your registered information.</small>
+                <em>Open Section →</em>
+            </button>
+
+            <button class="menu-card" data-student-page="my-notifications">
+                <span class="menu-icon">🔔</span>
+                <b>Notifications</b>
+                <small>View attendance notification information.</small>
+                <em>Open Section →</em>
+            </button>
+
+        </div>
+    </section>
+
+    <!-- STUDENT SUBPAGES -->
+    <section id="student-subpage" class="page-shell hidden">
+
+        <button id="student-back" class="back-button">
+            ← Back to Student Dashboard
+        </button>
+
+        <section id="student-page-my-attendance" class="content-page hidden">
+            <h1>My Attendance</h1>
+            <div class="panel">
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>Date</th><th>Time</th><th>Status</th></tr>
+                        </thead>
+                        <tbody id="my-attendance-table"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="student-page-my-profile" class="content-page hidden">
+            <h1>My Profile</h1>
+            <div class="panel" id="my-profile-details"></div>
+        </section>
+
+        <section id="student-page-my-notifications" class="content-page hidden">
+            <h1>Notifications</h1>
+            <div class="panel">
+                <p class="muted">
+                    Attendance SMS notifications will be sent to the
+                    registered parent or guardian number after integration.
+                </p>
+                <div class="empty-state">
+                    No demo notifications yet. SMS is not connected.
+                </div>
+            </div>
+        </section>
+
+    </section>
+
+</main>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
